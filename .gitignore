@@ -1,0 +1,6 @@
+.cache/
+node_modules/
+__pycache__/
+retrieval_index.npz
+*.tmp
+.DS_Store
