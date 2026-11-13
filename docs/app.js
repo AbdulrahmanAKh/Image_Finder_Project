@@ -89,11 +89,20 @@ $('search').addEventListener('click', async () => {
   } catch (error) { status(`Search failed: ${error.message} You can retry or choose a ready-made sample.`, true); }
   finally { setBusy(false); }
 });
-$('encode-live').addEventListener('click', () => {
+$('encode-live').addEventListener('click', async () => {
   if (!selection || busy) return;
-  selection = { ...selection, vector: undefined };
-  $('encode-live').hidden = true;
-  $('search').click();
+  const excludeIndex = selection.excludeIndex;
+  try {
+    // Exercise the same file validation/decoding path used by local uploads.
+    const response = await fetch(selection.url);
+    if (!response.ok) throw new Error('The selected image could not load.');
+    const blob = await response.blob();
+    const accepted = await acceptFile(new File([blob], 'live-query.png', { type: blob.type }));
+    if (accepted) {
+      selection.excludeIndex = excludeIndex;
+      $('search').click();
+    }
+  } catch (error) { status(error.message, true); }
 });
 async function acceptFile(file) {
   if (busy || !manifest || !file) return;
@@ -104,6 +113,7 @@ async function acceptFile(file) {
     const image = new Image(); image.src = url; await image.decode();
     if (image.naturalWidth * image.naturalHeight > 40000000) throw new Error('Choose an image smaller than 40 megapixels.');
     choose({ url, caption: file.name, excludeIndex: -1 }); uploadURL = url;
+    return true;
   } catch (error) { URL.revokeObjectURL(url); status(`Could not read this image. ${error.message}`, true); }
 }
 $('upload').addEventListener('change', event => acceptFile(event.target.files[0]));
@@ -131,7 +141,7 @@ $('search-detail').addEventListener('click', () => {
 });
 async function init() {
   try {
-    const responses = await Promise.all([fetch('data/manifest.json'), fetch('data/embeddings.f32')]);
+    const responses = await Promise.all([fetch('data/manifest.json', { cache: 'no-store' }), fetch('data/embeddings.f32', { cache: 'no-store' })]);
     if (responses.some(response => !response.ok)) throw new Error('Gallery files are unavailable.');
     manifest = await responses[0].json(); embeddings = new Float32Array(await responses[1].arrayBuffer());
     if (embeddings.length !== manifest.count * manifest.dimensions) throw new Error('The gallery index is incomplete.');

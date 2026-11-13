@@ -8,7 +8,7 @@ An interactive visual atlas: upload an image and retrieve related images from a 
 
 ## Try it
 
-Choose one of six held-out sample images for an instant search, or upload a JPG, PNG, or WebP image up to 10 MB. Uploaded images are encoded on your device in a Web Worker. The first upload downloads the ~89 MB model from Hugging Face; the model and browser runtime need an internet connection and enough device memory. Subsequent searches reuse the browser cache where available. Sample searches use cached CLIP vectors and do not download the model.
+Choose one of six held-out sample images for an instant search, or upload a JPG, PNG, or WebP image up to 10 MB. Uploaded images are encoded on your device in a Web Worker. The first upload downloads the ~89 MB model from Hugging Face; the model and browser runtime need an internet connection and enough device memory. Subsequent searches reuse the browser cache where available. Sample searches use cached CLIP vectors and do not download the model. Select **Run CLIP on this image** to process a sample through the same file validation, decoding, and inference pipeline as an upload.
 
 Results are existing dataset images, not generated images or web search results. Click a result to inspect its source row and score, or use it as a new query (its own gallery entry is excluded). Choose 6, 12, or 24 results. The processing animation follows actual model loading and inference, with no simulated detection delay. Keyboard focus, accessible controls, mobile layouts, and reduced-motion preferences are supported.
 
@@ -16,7 +16,7 @@ Results are existing dataset images, not generated images or web search results.
 
 Open [Image_Finder_CLIP.ipynb](Image_Finder_CLIP.ipynb) in Colab and run the cells in order. It downloads the validation parquet (~15 MB), builds a deterministic gallery, extracts normalized 512-dimensional embeddings, displays query/result strips, evaluates retrieval, accepts uploaded images, and exports all website data. Real execution outputs and figures are retained in the committed notebook.
 
-The implementation uses an ONNX quantized CLIP vision encoder and the official CLIP image processor. The website uses the same pinned model revision through Transformers.js 3.8.1 with CPU/WASM inference, which works without GitHub Pages cross-origin isolation headers. Minor Python/JavaScript resizing or runtime differences may affect near-tied scores. Sample retrieval uses the same exported embeddings on both platforms.
+The implementation uses an ONNX quantized CLIP vision encoder and the official CLIP image processor. The website uses the same pinned model revision through Transformers.js 3.8.1 with CPU/WASM inference, which works without GitHub Pages cross-origin isolation headers. Each image is encoded independently in Python and in the browser: dynamic q8 quantization can otherwise change embeddings with batch composition. Minor Python/JavaScript resizing or runtime differences may still affect near-tied scores. Sample retrieval uses the same exported embeddings on both platforms.
 
 ### Improvements over the supplied notebook
 
