@@ -41,7 +41,7 @@ CLIP is selected for its semantic image representation and practical browser sup
 - Duplicate RGB image content is removed before sampling.
 - Precision@5: fraction of the top five sharing the query class. Hit@5: fraction of queries with at least one same-class result in the top five.
 - Class labels approximate semantic relevance, not exact object identity. This split is an educational experiment, not an official retrieval benchmark. No fine-tuning or hyperparameter selection occurs on the queries. Pretraining overlap cannot be excluded.
-- The six ready-made samples are held-out queries, not gallery members. They are illustrative examples; the metrics cover all 200 queries.
+- The six ready-made samples are held-out queries, not gallery members. They are illustrative examples chosen to show recognizable matches across different categories; they are not a random sample of performance. The metrics cover all 200 queries.
 
 Tiny ImageNet broadens the original 101-category collection to 200 categories. Its **64 × 64 resolution** limits fine-detail search; a higher-resolution, appropriately licensed dataset is recommended for production. Arbitrary uploads always have nearest neighbors, even when no relevant match exists. CLIP may reflect biases in its pretraining data.
 
