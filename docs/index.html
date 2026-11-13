@@ -34,7 +34,7 @@
 <div class="model-stage" id="model-stage" hidden aria-hidden="true"><svg viewBox="0 0 520 100"><g class="connections"><path d="M45 50 160 20 270 50 380 20 475 50M45 50 160 80 270 50 380 80 475 50M160 20 270 50 160 80M380 20 270 50 380 80"/></g><g class="nodes"><circle cx="45" cy="50" r="8"/><circle cx="160" cy="20" r="6"/><circle cx="160" cy="80" r="6"/><circle cx="270" cy="50" r="13"/><circle cx="380" cy="20" r="6"/><circle cx="380" cy="80" r="6"/><circle cx="475" cy="50" r="8"/></g></svg><div><span>Input image</span><span>CLIP embedding</span><span>Gallery search</span></div></div>
 <div id="empty" class="empty"><span aria-hidden="true">◈</span><h4>Every image is a starting point.</h4><p>Pick a sample to see its nearest visual neighbors.<br>Or upload a photo and make your own connection.</p><div class="empty-tiles" id="empty-tiles" aria-hidden="true"></div></div>
 <div id="results" class="results" aria-label="Ranked image retrieval results"></div>
-<p class="score-note" id="score-note" hidden>Ranked by cosine similarity, from −1 to 1. Higher means a closer embedding. Scores are not confidence probabilities.</p>
+<p class="score-note" id="score-note" hidden>Ranked by cosine similarity, from −1 to 1. Higher means a closer embedding. Scores are not confidence probabilities. Live browser rankings can differ from cached samples due to image resizing and runtime numerics.</p>
 </div>
 </div>
 <div class="dataset-bar"><span><strong id="gallery-count">2,000 images</strong> · 200 categories · 64 × 64 originals</span><span>Retrieved exclusively from <a href="https://huggingface.co/datasets/zh-plus/tiny-imagenet" target="_blank" rel="noopener">Tiny ImageNet ↗</a></span></div>

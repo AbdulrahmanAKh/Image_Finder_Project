@@ -16,7 +16,7 @@ Results are existing dataset images, not generated images or web search results.
 
 Open [Image_Finder_CLIP.ipynb](Image_Finder_CLIP.ipynb) in Colab and run the cells in order. It downloads the validation parquet (~15 MB), builds a deterministic gallery, extracts normalized 512-dimensional embeddings, displays query/result strips, evaluates retrieval, accepts uploaded images, and exports all website data. Real execution outputs and figures are retained in the committed notebook.
 
-The implementation uses an ONNX quantized CLIP vision encoder and the official CLIP image processor. The website uses the same pinned model revision through Transformers.js 3.8.1 with CPU/WASM inference, which works without GitHub Pages cross-origin isolation headers. Each image is encoded independently in Python and in the browser: dynamic q8 quantization can otherwise change embeddings with batch composition. Minor Python/JavaScript resizing or runtime differences may still affect near-tied scores. Sample retrieval uses the same exported embeddings on both platforms.
+The implementation uses an ONNX quantized CLIP vision encoder and the official CLIP image processor. The website uses the same pinned model revision through Transformers.js 3.8.1 with CPU/WASM inference, which works without GitHub Pages cross-origin isolation headers. Each image is encoded independently in Python and in the browser: dynamic q8 quantization can otherwise change embeddings with batch composition. Python/browser image resizing and q8 runtime numerics can change scores and rankings. Cached samples reproduce the notebook results; live inference computes fresh browser embeddings. Sample retrieval uses the same exported embeddings on both platforms.
 
 ### Improvements over the supplied notebook
 
